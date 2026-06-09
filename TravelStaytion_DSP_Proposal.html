@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSP Platform Evaluation – Travel Staytion</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; font-size: 13px; color: #222; background: #fff; }
+  .page { max-width: 1050px; margin: 0 auto; padding: 30px 40px; }
+
+  /* Header */
+  .header { background: #1a7a78; color: #fff; padding: 28px 32px 20px; margin-bottom: 0; }
+  .header h1 { font-size: 32px; font-weight: 700; margin-bottom: 6px; }
+  .header .sub { font-size: 15px; font-weight: 400; margin-bottom: 10px; }
+  .header .meta { font-size: 12px; color: #b2dedd; }
+
+  /* Section headers */
+  .section-title { background: #1a7a78; color: #fff; padding: 9px 16px; font-size: 15px; font-weight: 700; margin: 24px 0 0; display: flex; align-items: center; gap: 10px; }
+  .section-title .num { background: #fff; color: #1a7a78; border-radius: 3px; padding: 1px 8px; font-size: 14px; font-weight: 700; }
+
+  /* Campaign brief table */
+  .brief-table { width: 100%; border-collapse: collapse; margin-bottom: 0; }
+  .brief-table td { border: 1px solid #d0e8e8; padding: 9px 14px; vertical-align: top; }
+  .brief-table td:first-child { font-weight: 700; width: 170px; background: #f0f9f9; white-space: nowrap; }
+  .brief-table .red { color: #c0392b; }
+
+  /* Legend */
+  .legend { display: flex; gap: 0; margin: 16px 0 10px; font-size: 12px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; padding: 7px 12px; border: 1px solid #ccc; }
+  .legend-item.yes { background: #1a7a78; color: #fff; }
+  .legend-item.limited { background: #e07020; color: #fff; }
+  .legend-item.no { background: #c0392b; color: #fff; }
+  .legend-badge { font-weight: 700; padding: 2px 8px; border-radius: 3px; }
+  .legend-item.yes .legend-badge { background: #fff; color: #1a7a78; }
+  .legend-item.limited .legend-badge { background: #fff; color: #e07020; }
+  .legend-item.no .legend-badge { background: #fff; color: #c0392b; }
+  .legend-label { font-size: 11px; max-width: 180px; line-height: 1.3; }
+
+  /* Platform comparison table */
+  .platform-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 0; }
+  .platform-table th { background: #2a5a58; color: #fff; padding: 8px 10px; text-align: center; border: 1px solid #1a4a48; font-size: 12px; vertical-align: middle; }
+  .platform-table td { border: 1px solid #c8dede; padding: 8px 10px; vertical-align: top; }
+  .platform-table tr:nth-child(even) td { background: #f6fcfc; }
+  .platform-table tr:nth-child(odd) td { background: #fff; }
+  .platform-table td.platform-name { font-weight: 700; color: #1a5a58; }
+  .platform-table td.placement { text-align: center; vertical-align: middle; font-weight: 700; font-size: 12px; }
+  .placement-yes { color: #fff; background: #1a7a78; padding: 3px 8px; border-radius: 3px; display: inline-block; }
+  .placement-limited { color: #fff; background: #e07020; padding: 3px 8px; border-radius: 3px; display: inline-block; }
+  .placement-no { color: #fff; background: #c0392b; padding: 3px 8px; border-radius: 3px; display: inline-block; }
+  .stars { color: #1a7a78; font-size: 13px; text-align: center; }
+
+  /* Recommendation section */
+  .rec-table { width: 100%; border-collapse: collapse; margin-bottom: 0; }
+  .rec-table td { border: 1px solid #d0e8e8; padding: 10px 14px; vertical-align: top; }
+  .rec-table .rec-num { background: #1a7a78; color: #fff; font-weight: 700; font-size: 15px; text-align: center; width: 40px; }
+  .rec-table .rec-label { background: #e8f7f6; color: #1a5a58; font-weight: 700; font-size: 12px; width: 160px; }
+  .rec-table .rec-label.orange { color: #c05000; background: #fef4ec; }
+  .rec-table .rec-label.teal { color: #1a5a58; background: #e8f7f6; }
+
+  /* Creative table */
+  .creative-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .creative-table th { background: #2a5a58; color: #fff; padding: 8px 12px; text-align: left; border: 1px solid #1a4a48; }
+  .creative-table td { border: 1px solid #c8dede; padding: 8px 12px; vertical-align: top; }
+  .creative-table tr:nth-child(even) td { background: #f6fcfc; }
+  .creative-table td:first-child { font-weight: 700; }
+  .creative-note { font-size: 12px; margin-top: 12px; line-height: 1.6; }
+  .creative-note strong { font-weight: 700; }
+
+  /* KPI table */
+  .kpi-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .kpi-table th { background: #2a5a58; color: #fff; padding: 8px 12px; text-align: center; border: 1px solid #1a4a48; }
+  .kpi-table th:first-child { text-align: left; }
+  .kpi-table td { border: 1px solid #c8dede; padding: 8px 12px; vertical-align: middle; }
+  .kpi-table tr:nth-child(even) td { background: #f6fcfc; }
+  .kpi-table td:first-child { font-weight: 700; background: #f0f9f9; }
+  .kpi-table .very-high { background: #1a7a78; color: #fff; text-align: center; font-weight: 700; }
+  .kpi-table .high { background: #2a8a86; color: #fff; text-align: center; font-weight: 700; }
+  .kpi-table .medium { background: #4aaa9a; color: #fff; text-align: center; font-weight: 700; }
+
+  /* Next steps */
+  .steps-table { width: 100%; border-collapse: collapse; }
+  .steps-table td { border: 1px solid #d0e8e8; padding: 10px 14px; vertical-align: top; }
+  .steps-table .step-num { background: #1a7a78; color: #fff; font-weight: 700; font-size: 14px; text-align: center; width: 40px; }
+  .steps-table .step-label { background: #e8f7f6; color: #1a5a58; font-weight: 700; font-size: 12px; width: 170px; }
+
+  /* Footer */
+  .footer { text-align: center; color: #888; font-size: 11px; border-top: 2px solid #1a7a78; margin-top: 30px; padding-top: 12px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <h1>DSP Platform Evaluation</h1>
+    <div class="sub">Property Owner Acquisition Strategy &nbsp;|&nbsp; Budget: €5,000 / Month</div>
+    <div class="meta">www.travelstaytion.com &nbsp;·&nbsp; Prepared by: Performance Marketing Team &nbsp;·&nbsp; June 2026</div>
+  </div>
+
+  <!-- Section 1 -->
+  <div class="section-title"><span class="num">1</span> Campaign Brief</div>
+  <table class="brief-table">
+    <tr><td>Objective</td><td>Acquire new property owners who will list their properties on Travel Staytion</td></tr>
+    <tr><td>Target Audience</td><td>Property owners, landlords, vacation rental hosts, holiday home owners, real estate investors and professional property managers</td></tr>
+    <tr><td class="red">Not the Target</td><td>Travelers looking to book accommodation. This is a property supply acquisition campaign, not a demand or booking campaign.</td></tr>
+    <tr><td>Available Budget</td><td>€5,000 per month</td></tr>
+    <tr><td>Key Message</td><td>List your property on Travel Staytion and reach thousands of travelers. Grow your rental income.</td></tr>
+    <tr><td>Primary KPI</td><td>Host registrations and property listing sign-ups on travelstaytion.com</td></tr>
+  </table>
+
+  <!-- Section 2 -->
+  <div class="section-title"><span class="num">2</span> Platform Comparison: 10 Channels Evaluated for Property Owner Acquisition</div>
+
+  <p style="margin:12px 0 8px; font-weight:700; font-size:12px;">Specific Placement Targeting column:</p>
+  <div class="legend">
+    <div class="legend-item yes"><span class="legend-badge">Yes</span><span class="legend-label">Can target specific sites or communities at this budget</span></div>
+    <div class="legend-item limited"><span class="legend-badge">Limited</span><span class="legend-label">Technically possible but inventory or granularity may be restricted</span></div>
+    <div class="legend-item no"><span class="legend-badge">No</span><span class="legend-label">Audience or category based only</span></div>
+  </div>
+
+  <table class="platform-table">
+    <thead>
+      <tr>
+        <th>Platform</th>
+        <th>Type</th>
+        <th>Property Owner<br>Audience Reached</th>
+        <th>Targeting Options</th>
+        <th>Key Advantage for This Campaign</th>
+        <th>Fit</th>
+        <th>Specific Placement<br>Targeting</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="platform-name">Meta Ads<br>(Facebook /<br>Instagram)</td>
+        <td>Social DSP</td>
+        <td>Airbnb hosts, landlords, vacation rental owners, holiday home owners, real estate investors on Facebook and Instagram</td>
+        <td>Interests: Airbnb hosting, vacation rental, property investment, real estate. Lookalike from existing hosts. Behavioural targeting.</td>
+        <td>Largest concentration of property owners globally. Highly visual formats suit property showcase. Low CPL, no minimum spend.</td>
+        <td class="stars">★★<br>★★<br>★</td>
+        <td class="placement"><span class="placement-no">No</span></td>
+      </tr>
+      <tr>
+        <td class="platform-name">Google Display Network (GDN)</td>
+        <td>Self-Serve DSP</td>
+        <td>Property owners browsing real estate sites, property management blogs, Airbnb host community pages and home improvement content</td>
+        <td>Custom intent: 'list property', 'vacation rental platform', 'Airbnb alternative'. In-market: real estate. Keyword contextual.</td>
+        <td>Reaches property owners actively searching how to list and monetise their property. Strong intent signals via Google.</td>
+        <td class="stars">★★<br>★★</td>
+        <td class="placement"><span class="placement-limited">Limited</span></td>
+      </tr>
+      <tr>
+        <td class="platform-name">GDN Remarketing</td>
+        <td>Self-Serve DSP</td>
+        <td>People who already visited the Travel Staytion host registration page but did not complete sign-up</td>
+        <td>Pixel-based remarketing of host page visitors. Custom audience of partial form completions and drop-offs.</td>
+        <td>Lowest cost, highest intent. These people already showed interest in listing a property. Follows them across the web to convert.</td>
+        <td class="stars">★★<br>★★<br>★</td>
+        <td class="placement"><span class="placement-no">No</span></td>
+      </tr>
+      <tr>
+        <td class="platform-name">LinkedIn Ads</td>
+        <td>B2B Social DSP</td>
+        <td>Professional property managers, real estate agencies, hospitality operators, vacation rental business owners</td>
+        <td>Job title: property manager, real estate agent, hospitality owner. Industry: real estate, hospitality. Company size targeting.</td>
+        <td>Only platform with professional-level targeting. Reaches operators managing multiple properties, agencies and real estate businesses.</td>
+        <td class="stars">★★<br>★★</td>
+        <td class="placement"><span class="placement-no">No</span></td>
+      </tr>
+      <tr>
+        <td class="platform-name">YouTube Ads<br>(via Google Ads)</td>
+        <td>Video DSP</td>
+        <td>Property owners watching content about Airbnb hosting, rental income, real estate investment, property management tips</td>
+        <td>Custom intent: viewers of Airbnb host tutorials, real estate channels, vacation rental guides. In-market real estate. Remarketing.</td>
+        <td>Video format is highly persuasive for property acquisition. Show a 15-30 second ad before relevant property and real estate content.</td>
+        <td class="stars">★★<br>★★</td>
+        <td class="placement"><span class="placement-limited">Limited</span></td>
+      </tr>
+      <tr>
+        <td class="platform-name">Reddit Ads</td>
+        <td>Community DSP</td>
+        <td>Property owners and landlords active in r/airbnb, r/realestateinvesting, r/landlord, r/vacationrentals, r/shorttermrentals</td>
+        <td>Subreddit targeting: r/airbnb, r/realestateinvesting, r/landlord. Interest and keyword targeting within communities.</td>
+        <td>Direct access to active communities of property owners and hosts. High trust environment. Users in these communities are actively discussing hosting.</td>
+        <td class="stars">★★<br>★★</td>
+        <td class="placement"><span class="placement-yes">Yes</span></td>
+      </tr>
+      <tr>
+        <td class="platform-name">Microsoft Advertising (MSAN)</td>
+        <td>Search and Display DSP</td>
+        <td>Property owners and landlords researching via Bing, MSN real estate sections, Microsoft News property content</td>
+        <td>Search intent: 'list vacation rental', 'add property to booking site'. Display via Microsoft Audience Network on real estate content.</td>
+        <td>Bing skews toward older, higher-income users: a strong demographic for property ownership. Lower CPC than Google due to less competition.</td>
+        <td class="stars">★★<br>★★</td>
+        <td class="placement"><span class="placement-limited">Limited</span></td>
+      </tr>
+      <tr>
+        <td class="platform-name">Quora Ads</td>
+        <td>Intent-Based DSP</td>
+        <td>People actively asking questions about listing properties, vacation rental platforms, Airbnb alternatives, earning from holiday homes</td>
+        <td>Question targeting: 'How do I list my property?', 'Best vacation rental platforms'. Topic targeting: real estate, property management.</td>
+        <td>Reaches property owners at the exact moment they are researching where to list. Unique intent signal: they are asking the question Travel Staytion answers.</td>
+        <td class="stars">★★<br>★★</td>
+        <td class="placement"><span class="placement-yes">Yes</span></td>
+      </tr>
+      <tr>
+        <td class="platform-name">Taboola</td>
+        <td>Native DSP</td>
+        <td>Property owners reading real estate content, rental income guides and investment articles on major news sites</td>
+        <td>Contextual targeting: real estate, property investment, rental income, home ownership content topics</td>
+        <td>Reaches property owners while they are reading relevant content. Native format blends into editorial naturally. Good for awareness.</td>
+        <td class="stars">★★<br>★</td>
+        <td class="placement"><span class="placement-no">No</span></td>
+      </tr>
+      <tr>
+        <td class="platform-name">Outbrain</td>
+        <td>Native DSP</td>
+        <td>Property owners reading real estate or rental income content on premium European news publishers</td>
+        <td>Contextual targeting: real estate, property rental, investment topics. Strong European publisher coverage.</td>
+        <td>Good for reaching property owners in key European Travel Staytion markets via premium news editorial content.</td>
+        <td class="stars">★★<br>★</td>
+        <td class="placement"><span class="placement-no">No</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Section 3 -->
+  <div class="section-title"><span class="num">3</span> Recommendation: Best Platforms for Property Owner Acquisition</div>
+  <table class="rec-table">
+    <tr>
+      <td class="rec-num">1</td>
+      <td class="rec-label teal">Best fit overall</td>
+      <td><strong>Meta Ads (Facebook / Instagram)</strong> - The strongest platform for reaching property owners. Facebook has the largest concentration of Airbnb hosts, landlords and vacation rental owners globally. Interest and behavioural targeting is highly precise. Lookalike audiences can replicate existing hosts. Low CPL, visual ad formats work well for property. Works at any budget with no minimum.</td>
+    </tr>
+    <tr>
+      <td class="rec-num">2</td>
+      <td class="rec-label orange">Must run alongside any other platform</td>
+      <td><strong>GDN Remarketing</strong> - Install a pixel on the Travel Staytion host registration page from day one. Any property owner who visited but did not sign up will see follow-up ads across the web. This is the lowest cost conversion tactic available and should always be running regardless of which other platform is chosen.</td>
+    </tr>
+    <tr>
+      <td class="rec-num">3</td>
+      <td class="rec-label teal">Best for high-value hosts</td>
+      <td><strong>LinkedIn Ads</strong> - Ideal for reaching professional property managers, real estate agencies and hospitality operators who manage multiple properties. Higher CPC than Meta but audience quality for professional operators is unmatched. Strong for acquiring hosts with large property portfolios.</td>
+    </tr>
+    <tr>
+      <td class="rec-num">4</td>
+      <td class="rec-label teal">Best for specific placement and community reach</td>
+      <td><strong>Reddit Ads</strong> - Direct access to active communities of property owners: r/airbnb, r/realestateinvesting, r/landlord, r/shorttermrentals. Subreddit targeting means your ad appears exactly where property owners are already discussing hosting. High relevance, low cost.</td>
+    </tr>
+    <tr>
+      <td class="rec-num">5</td>
+      <td class="rec-label teal">Best for high-intent search moments</td>
+      <td><strong>Quora Ads</strong> - Reaches property owners at the exact moment they are asking where to list their property. Question targeting on queries like 'Best vacation rental platform' or 'How do I list my holiday home' puts Travel Staytion directly in front of the most ready-to-convert audience available at this budget.</td>
+    </tr>
+    <tr>
+      <td class="rec-num">6</td>
+      <td class="rec-label teal">Good supporting channel</td>
+      <td><strong>YouTube Ads</strong> - Property owners actively watching Airbnb hosting tutorials, rental income guides and real estate investment videos are a well-defined and reachable audience via Google custom intent. A 15-30 second video ad before relevant content is persuasive and memorable.</td>
+    </tr>
+  </table>
+
+  <!-- Section 4 -->
+  <div class="section-title"><span class="num">4</span> Creative Direction and Ad Formats</div>
+  <table class="creative-table">
+    <thead>
+      <tr><th>Format</th><th>Dimensions</th><th>Platform and Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Facebook Feed Image</td><td>1080 x 1080 px</td><td>Meta Ads. Square image of a real property with overlay text: Start Earning From Your Home. Priority #1.</td></tr>
+      <tr><td>Instagram Story / Reel</td><td>1080 x 1920 px</td><td>Meta Ads. Full screen vertical. Show a property owner explaining how easy it was to list. High engagement.</td></tr>
+      <tr><td>YouTube Pre-Roll</td><td>16:9 video, 15-30 sec</td><td>YouTube Ads. Hook in first 5 seconds: 'Have a property sitting empty?' Skip-resistant message.</td></tr>
+      <tr><td>LinkedIn Single Image</td><td>1200 x 627 px</td><td>LinkedIn Ads. Professional tone. Highlight earnings potential for property managers. Show dashboard or stats.</td></tr>
+      <tr><td>Reddit Promoted Post</td><td>1200 x 628 px</td><td>Reddit Ads. Conversational tone. Must feel native to the community. Avoid corporate language.</td></tr>
+      <tr><td>GDN Medium Rectangle</td><td>300 x 250 px</td><td>GDN Remarketing and Custom Intent. Priority retargeting format for property owners who visited the host page.</td></tr>
+      <tr><td>GDN Leaderboard</td><td>728 x 90 px</td><td>GDN. Desktop placements on real estate and property management sites.</td></tr>
+      <tr><td>Quora Image Ad</td><td>1200 x 628 px</td><td>Quora Ads. Appears next to questions about vacation rental platforms. Direct headline addressing the question.</td></tr>
+      <tr><td>Native Card</td><td>1200 x 628 px</td><td>Taboola and Outbrain. Headline addresses property owners: Turn Your Property Into Income. Earn More From Your Home.</td></tr>
+    </tbody>
+  </table>
+  <p class="creative-note"><strong>Message to property owners:</strong> Focus on earning potential and simplicity of listing. CTAs: "List Your Property", "Start Earning Today", "Join Thousands of Hosts", "Add Your Property Free". Use real properties, not stock imagery. Highlight how easy and fast the sign-up process is.</p>
+
+  <!-- Section 5 -->
+  <div class="section-title"><span class="num">5</span> KPIs and Success Metrics</div>
+  <table class="kpi-table">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>Meta Ads</th>
+        <th>GDN Remarketing</th>
+        <th>LinkedIn</th>
+        <th>Reddit</th>
+        <th>Quora</th>
+        <th>YouTube</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Primary KPI</td>
+        <td style="text-align:center">Host registrations</td>
+        <td style="text-align:center">Completed sign-ups</td>
+        <td style="text-align:center">Property mgr leads</td>
+        <td style="text-align:center">Host page clicks</td>
+        <td style="text-align:center">Sign-up conversions</td>
+        <td style="text-align:center">Host page visits</td>
+      </tr>
+      <tr>
+        <td>Est. CPL</td>
+        <td style="text-align:center">€5-15</td>
+        <td style="text-align:center">€3-10</td>
+        <td style="text-align:center">€40-80</td>
+        <td style="text-align:center">€5-20</td>
+        <td style="text-align:center">€5-15</td>
+        <td style="text-align:center">€8-20</td>
+      </tr>
+      <tr>
+        <td>Est. Impressions/mo</td>
+        <td style="text-align:center">400K+</td>
+        <td style="text-align:center">200K+</td>
+        <td style="text-align:center">50K+</td>
+        <td style="text-align:center">100K+</td>
+        <td style="text-align:center">50K+</td>
+        <td style="text-align:center">250K+</td>
+      </tr>
+      <tr>
+        <td>Expected CTR</td>
+        <td style="text-align:center">1.5-3%</td>
+        <td style="text-align:center">0.5-1%</td>
+        <td style="text-align:center">0.4-0.8%</td>
+        <td style="text-align:center">0.5-1.5%</td>
+        <td style="text-align:center">1-2%</td>
+        <td style="text-align:center">View rate 25-40%</td>
+      </tr>
+      <tr>
+        <td>Audience quality for this brief</td>
+        <td class="very-high">Very high</td>
+        <td class="very-high">Very high</td>
+        <td class="high">High for professionals</td>
+        <td class="high">High in communities</td>
+        <td class="very-high">Very high intent</td>
+        <td class="medium">Medium-high</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Section 6 -->
+  <div class="section-title"><span class="num">6</span> Next Steps</div>
+  <table class="steps-table">
+    <tr>
+      <td class="step-num">1</td>
+      <td class="step-label">Install Pixels Now</td>
+      <td>Place the Meta Pixel and Google Ads tag on the Travel Staytion host registration page immediately. Required for all remarketing. This should happen before any campaign launches.</td>
+    </tr>
+    <tr>
+      <td class="step-num">2</td>
+      <td class="step-label">Select Primary Channel</td>
+      <td>Review Section 3 and align on the primary platform. Recommendation: start with Meta Ads for volume and GDN remarketing from day one.</td>
+    </tr>
+    <tr>
+      <td class="step-num">3</td>
+      <td class="step-label">Build Audiences</td>
+      <td>Meta: interest audiences (Airbnb hosting, vacation rental, property investment) and lookalike from existing host list. LinkedIn: job title and industry. Reddit: select relevant subreddits.</td>
+    </tr>
+    <tr>
+      <td class="step-num">4</td>
+      <td class="step-label">Brief Creative Team</td>
+      <td>Produce property owner focused creatives (see Section 4). Priority: Facebook Feed 1080x1080 and GDN 300x250. Use real properties, not stock images.</td>
+    </tr>
+    <tr>
+      <td class="step-num">5</td>
+      <td class="step-label">Launch Target</td>
+      <td>July 2026. Meta Ads, GDN and Reddit can go live within 1 week. LinkedIn and Quora within 1 week. YouTube requires video asset.</td>
+    </tr>
+    <tr>
+      <td class="step-num">6</td>
+      <td class="step-label">30-Day Review</td>
+      <td>Measure cost per host registration per platform. Shift budget to the channel delivering the lowest CPL. Drop any channel above €50 CPL after 30 days.</td>
+    </tr>
+  </table>
+
+  <div class="footer">Confidential &nbsp;|&nbsp; Travel Staytion Property Owner Acquisition &nbsp;|&nbsp; June 2026 &nbsp;|&nbsp; www.travelstaytion.com</div>
+
+</div>
+</body>
+</html>
