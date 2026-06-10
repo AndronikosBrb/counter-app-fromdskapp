@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meta Ads Strategy – Travel Staytion</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; font-size: 12.5px; color: #222; background: #fff; }
+  .page { max-width: 1000px; margin: 0 auto; padding: 30px 40px; }
+
+  /* Header */
+  .header { background: #1877F2; color: #fff; padding: 28px 32px 22px; }
+  .header .eyebrow { font-size: 12px; color: #a8c8ff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .header h1 { font-size: 30px; font-weight: 700; margin-bottom: 4px; }
+  .header .sub { font-size: 14px; color: #d0e4ff; margin-bottom: 10px; }
+  .header .meta-line { font-size: 11px; color: #a8c8ff; }
+  .header .budget-badge { display: inline-block; background: #fff; color: #1877F2; font-weight: 700; font-size: 16px; padding: 5px 16px; border-radius: 20px; margin-top: 10px; }
+
+  /* Section titles */
+  .section-title { background: #1877F2; color: #fff; padding: 8px 16px; font-size: 14px; font-weight: 700; margin: 22px 0 0; display: flex; align-items: center; gap: 10px; }
+  .section-title .num { background: #fff; color: #1877F2; border-radius: 3px; padding: 1px 8px; font-size: 13px; font-weight: 700; }
+  .section-title.dark { background: #0f5cd4; }
+
+  /* Intro brief */
+  .brief-table { width: 100%; border-collapse: collapse; }
+  .brief-table td { border: 1px solid #d0dff8; padding: 9px 14px; vertical-align: top; }
+  .brief-table td:first-child { font-weight: 700; width: 180px; background: #f0f5ff; white-space: nowrap; }
+
+  /* Two-column layout */
+  .two-col { display: table; width: 100%; border-collapse: collapse; }
+  .col { display: table-cell; vertical-align: top; padding: 0; }
+  .col-left { width: 50%; padding-right: 8px; }
+  .col-right { width: 50%; padding-left: 8px; }
+
+  /* Cards */
+  .card { border: 1px solid #d0dff8; margin-bottom: 8px; }
+  .card-head { background: #1877F2; color: #fff; padding: 6px 12px; font-weight: 700; font-size: 12px; }
+  .card-head.light { background: #e8f0ff; color: #1042a0; }
+  .card-head.orange { background: #e07020; }
+  .card-head.green { background: #1a8a50; }
+  .card-head.purple { background: #6b3fa0; }
+  .card-body { padding: 10px 12px; font-size: 12px; line-height: 1.6; }
+  .card-body ul { padding-left: 16px; }
+  .card-body ul li { margin-bottom: 3px; }
+  .card-body .tag { display: inline-block; background: #e8f0ff; color: #1042a0; border-radius: 3px; padding: 1px 7px; font-size: 11px; margin: 2px 2px 2px 0; font-weight: 700; }
+  .card-body .tag.orange { background: #fff0e0; color: #c05000; }
+  .card-body .tag.green { background: #e0f5ea; color: #1a6a40; }
+  .card-body .tag.purple { background: #f0eaf8; color: #5a2f90; }
+
+  /* Strategy table */
+  .strat-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 0; }
+  .strat-table th { background: #1352c0; color: #fff; padding: 8px 10px; text-align: left; border: 1px solid #0f42a0; }
+  .strat-table td { border: 1px solid #d0dff8; padding: 8px 10px; vertical-align: top; }
+  .strat-table tr:nth-child(even) td { background: #f5f8ff; }
+  .strat-table td.label { font-weight: 700; color: #1042a0; background: #eef3ff; width: 160px; }
+  .strat-table td.phase { font-weight: 700; color: #fff; background: #1877F2; text-align: center; width: 100px; }
+  .strat-table td.phase.p2 { background: #0f5cd4; }
+  .strat-table td.phase.p3 { background: #0a42a8; }
+
+  /* Budget table */
+  .budget-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .budget-table th { background: #1352c0; color: #fff; padding: 8px 10px; border: 1px solid #0f42a0; text-align: center; }
+  .budget-table th:first-child { text-align: left; }
+  .budget-table td { border: 1px solid #d0dff8; padding: 8px 10px; vertical-align: middle; text-align: center; }
+  .budget-table td:first-child { font-weight: 700; background: #eef3ff; color: #1042a0; text-align: left; }
+  .budget-table tr:nth-child(even) td { background: #f5f8ff; }
+  .budget-table tr:nth-child(even) td:first-child { background: #eef3ff; }
+  .budget-table .total { background: #1877F2; color: #fff; font-weight: 700; }
+  .budget-table .total td { background: #1877F2; color: #fff; font-weight: 700; border-color: #1352c0; }
+
+  /* KPI table */
+  .kpi-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .kpi-table th { background: #1352c0; color: #fff; padding: 8px 10px; border: 1px solid #0f42a0; text-align: center; }
+  .kpi-table th:first-child { text-align: left; }
+  .kpi-table td { border: 1px solid #d0dff8; padding: 8px 10px; vertical-align: middle; text-align: center; }
+  .kpi-table td:first-child { font-weight: 700; background: #eef3ff; color: #1042a0; text-align: left; }
+  .kpi-table tr:nth-child(even) td { background: #f5f8ff; }
+  .kpi-table tr:nth-child(even) td:first-child { background: #eef3ff; }
+
+  /* Funnel */
+  .funnel { width: 100%; margin: 0; }
+  .funnel-row { padding: 7px 16px; margin: 3px 0; color: #fff; font-weight: 700; font-size: 12px; position: relative; }
+  .funnel-row.top { background: #1877F2; }
+  .funnel-row.mid { background: #0f5cd4; margin-left: 20px; margin-right: 20px; }
+  .funnel-row.bot { background: #0a42a8; margin-left: 40px; margin-right: 40px; }
+  .funnel-row .sub-text { font-weight: 400; font-size: 11px; color: #c8dcff; margin-top: 1px; }
+
+  /* Highlight box */
+  .highlight { background: #eef3ff; border-left: 4px solid #1877F2; padding: 10px 14px; margin: 10px 0; font-size: 12px; line-height: 1.6; }
+  .highlight strong { color: #1042a0; }
+
+  /* Next steps */
+  .steps-table { width: 100%; border-collapse: collapse; }
+  .steps-table td { border: 1px solid #d0dff8; padding: 9px 14px; vertical-align: top; }
+  .steps-table .step-num { background: #1877F2; color: #fff; font-weight: 700; font-size: 14px; text-align: center; width: 40px; }
+  .steps-table .step-label { background: #eef3ff; color: #1042a0; font-weight: 700; font-size: 12px; width: 170px; }
+
+  /* Footer */
+  .footer { text-align: center; color: #888; font-size: 11px; border-top: 2px solid #1877F2; margin-top: 28px; padding-top: 10px; }
+
+  /* Pill badges */
+  .pill { display: inline-block; border-radius: 10px; padding: 2px 9px; font-size: 11px; font-weight: 700; margin: 1px; }
+  .pill.blue { background: #1877F2; color: #fff; }
+  .pill.light { background: #d0e4ff; color: #1042a0; }
+  .pill.green { background: #1a8a50; color: #fff; }
+  .pill.orange { background: #e07020; color: #fff; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="eyebrow">Property Owner Acquisition · Meta Ads Focus</div>
+    <h1>Meta Ads Strategy</h1>
+    <div class="sub">Facebook &amp; Instagram · Property Owner Acquisition Campaign · Travel Staytion</div>
+    <div class="meta-line">www.travelstaytion.com &nbsp;·&nbsp; Prepared by: Performance Marketing Team &nbsp;·&nbsp; June 2026</div>
+    <div class="budget-badge">Budget: €50 / day &nbsp;(~€1,500 / month)</div>
+  </div>
+
+  <!-- Section 1: Why Meta -->
+  <div class="section-title"><span class="num">1</span> Why Meta is the Right Channel</div>
+  <table class="brief-table">
+    <tr><td>Audience Scale</td><td>Facebook has the largest concentration of Airbnb hosts, landlords, vacation rental owners and property investors of any single platform. Millions of property owners are active daily.</td></tr>
+    <tr><td>Targeting Depth</td><td>Interest, behavioural, lookalike, and custom audiences allow extremely precise reach to property owners — not just broad demographics. No other social platform matches this granularity for this audience.</td></tr>
+    <tr><td>Visual Formats</td><td>Image and video ads are ideal for property acquisition. A well-photographed property with a clear earning potential message converts at low cost.</td></tr>
+    <tr><td>No Minimum Spend</td><td>Meta works at any budget. €50/day gives strong reach and learning — enough data for the algorithm to optimise within 7–14 days.</td></tr>
+    <tr><td>Full-Funnel Control</td><td>Meta can run awareness, consideration and conversion campaigns simultaneously, or in sequence, from a single platform and Ads Manager account.</td></tr>
+    <tr><td>Pixel &amp; Retargeting</td><td>Once the Meta Pixel is installed on the Travel Staytion host registration page, you own a retargeting audience that compounds in value over time — visitors, partial completions, drop-offs.</td></tr>
+  </table>
+
+  <!-- Section 2: Audience Strategy -->
+  <div class="section-title"><span class="num">2</span> Audience Strategy &amp; Targeting Theory</div>
+
+  <div class="funnel" style="margin-top:12px; margin-bottom:12px;">
+    <div class="funnel-row top">TOFU — Top of Funnel: Cold Audiences &nbsp;|&nbsp; Reach new property owners who don't know Travel Staytion
+      <div class="sub-text">Interest targeting · Behavioural targeting · Broad + algorithmic expansion</div>
+    </div>
+    <div class="funnel-row mid">MOFU — Middle of Funnel: Warm Audiences &nbsp;|&nbsp; Re-engage people who showed intent
+      <div class="sub-text">Video viewers · Page engagers · Website visitors (non-host pages)</div>
+    </div>
+    <div class="funnel-row bot">BOFU — Bottom of Funnel: High-Intent Retargeting &nbsp;|&nbsp; Convert property owners who nearly signed up
+      <div class="sub-text">Host registration page visitors · Partial form completions · Drop-offs</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="col col-left">
+      <div class="card">
+        <div class="card-head">Audience 1 — Interest Targeting (TOFU)</div>
+        <div class="card-body">
+          <p style="margin-bottom:6px;">Target people with demonstrated interest in property hosting and rental income:</p>
+          <ul>
+            <li>Airbnb hosting &amp; vacation rental management</li>
+            <li>Property investment &amp; real estate</li>
+            <li>Holiday home ownership</li>
+            <li>Rental income &amp; passive income from property</li>
+            <li>Home improvement &amp; property renovation</li>
+          </ul>
+          <p style="margin-top:7px;"><span class="tag">Cold audience</span> <span class="tag">Broad reach</span> <span class="tag">Brand awareness</span></p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head orange">Audience 2 — Behavioural Targeting (TOFU)</div>
+        <div class="card-body">
+          <p style="margin-bottom:6px;">Target users whose on-platform behaviour signals property ownership:</p>
+          <ul>
+            <li>People who have interacted with Airbnb, Booking.com host or VRBO pages</li>
+            <li>Users who clicked real estate or property listing ads</li>
+            <li>Engaged with property management content</li>
+            <li>Travel enthusiasts who also engage with real estate content (dual signal)</li>
+          </ul>
+          <p style="margin-top:7px;"><span class="tag orange">Behavioural</span> <span class="tag orange">Higher intent</span></p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head green">Audience 3 — Lookalike Audiences (TOFU/MOFU)</div>
+        <div class="card-body">
+          <p style="margin-bottom:6px;">Seed lookalikes from your highest-quality existing data sources:</p>
+          <ul>
+            <li><strong>1% LAL from existing registered hosts</strong> — highest priority seed list</li>
+            <li>1–2% LAL from host registration page visitors</li>
+            <li>1–3% LAL from email list of past enquiries</li>
+            <li>Test 1% vs 2–3% LAL to balance precision vs scale</li>
+          </ul>
+          <p style="margin-top:7px;"><span class="tag green">Lookalike</span> <span class="tag green">Algorithm-driven</span> <span class="tag green">Scalable</span></p>
+        </div>
+      </div>
+    </div>
+    <div class="col col-right">
+      <div class="card">
+        <div class="card-head purple">Audience 4 — Retargeting: Page &amp; Video Engagers (MOFU)</div>
+        <div class="card-body">
+          <p style="margin-bottom:6px;">Re-engage people who interacted with Travel Staytion on Meta but did not visit the site:</p>
+          <ul>
+            <li>People who watched 50%+ of a property owner video ad</li>
+            <li>Facebook Page visitors and post engagers (last 90 days)</li>
+            <li>Instagram profile visitors and Story viewers (last 60 days)</li>
+            <li>People who clicked "Learn More" but did not convert</li>
+          </ul>
+          <p style="margin-top:7px;"><span class="tag purple">Warm audience</span> <span class="tag purple">Lower CPL</span></p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head" style="background:#c0392b;">Audience 5 — High-Intent Retargeting (BOFU)</div>
+        <div class="card-body">
+          <p style="margin-bottom:6px;">The highest-converting audience. Requires Meta Pixel on host registration page:</p>
+          <ul>
+            <li><strong>Host registration page visitors</strong> who did not complete sign-up</li>
+            <li>Partial form completions and drop-offs (ViewContent event)</li>
+            <li>People who visited the host page 2+ times (stronger signal)</li>
+            <li>Window: last 30 days for recency; last 60 days as secondary</li>
+          </ul>
+          <p style="margin-top:7px;"><span class="tag" style="background:#fde8e8;color:#c0392b;">BOFU</span> <span class="tag" style="background:#fde8e8;color:#c0392b;">Highest intent</span> <span class="tag" style="background:#fde8e8;color:#c0392b;">Pixel required</span></p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head light">Audience Exclusions — Critical</div>
+        <div class="card-body">
+          <p style="margin-bottom:6px;">Always exclude from all cold audiences:</p>
+          <ul>
+            <li>Existing registered hosts (CRM upload)</li>
+            <li>Traveler/guest audiences (interest: booking holidays, travel deals)</li>
+            <li>Recent converters (last 30 days) to avoid wasted spend</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Campaign Structure -->
+  <div class="section-title"><span class="num">3</span> Campaign Structure</div>
+  <table class="strat-table" style="margin-top:10px;">
+    <thead>
+      <tr><th>Campaign</th><th>Objective</th><th>Audience</th><th>Ad Format</th><th>Daily Budget</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Campaign 1</strong><br>Cold Prospecting</td>
+        <td>Leads / Website conversions</td>
+        <td>Interest + Behavioural (Audiences 1 &amp; 2)<br>Split into separate ad sets to test</td>
+        <td>Single Image Feed<br>Carousel<br>Short Video (Reel)</td>
+        <td style="text-align:center;font-weight:700;">€25/day</td>
+      </tr>
+      <tr>
+        <td><strong>Campaign 2</strong><br>Lookalike Prospecting</td>
+        <td>Leads / Website conversions</td>
+        <td>1% LAL from existing hosts<br>1–3% LAL from host page visitors</td>
+        <td>Single Image Feed<br>Video (15–30 sec)</td>
+        <td style="text-align:center;font-weight:700;">€15/day</td>
+      </tr>
+      <tr>
+        <td><strong>Campaign 3</strong><br>Retargeting</td>
+        <td>Conversions (host sign-up)</td>
+        <td>Host page visitors + engagers<br>(Audiences 4 &amp; 5)</td>
+        <td>Single Image<br>Dynamic creative<br>Story (BOFU urgency)</td>
+        <td style="text-align:center;font-weight:700;">€10/day</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="highlight" style="margin-top:8px;">
+    <strong>Total: €50/day.</strong> Allocate ~50% to cold prospecting, 30% to lookalike prospecting, and 20% to retargeting. Once BOFU audiences build (after 2–4 weeks), shift €5/day from prospecting to retargeting for better CPL.
+  </div>
+
+  <!-- Section 4: Creative Strategy -->
+  <div class="section-title"><span class="num">4</span> Creative Strategy</div>
+  <table class="strat-table" style="margin-top:10px;">
+    <thead>
+      <tr><th>Format</th><th>Placement</th><th>Message &amp; Approach</th><th>CTA</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Feed Image</strong><br>1080 × 1080 px</td>
+        <td>Facebook &amp; Instagram Feed</td>
+        <td>Real property photo (not stock). Overlay: "Earn €X,XXX/month from your property." Lead with earning potential. Clean, aspirational.</td>
+        <td>List Your Property</td>
+      </tr>
+      <tr>
+        <td><strong>Reel / Story Video</strong><br>1080 × 1920 px<br>15–30 sec</td>
+        <td>Reels, Stories</td>
+        <td>Property owner testimonial or walkthrough. Hook in first 2 seconds: "Have a property sitting empty?" Show simplicity of listing. End on earnings.</td>
+        <td>Start Earning Today</td>
+      </tr>
+      <tr>
+        <td><strong>Carousel</strong><br>1080 × 1080 px<br>3–5 cards</td>
+        <td>Facebook &amp; Instagram Feed</td>
+        <td>Card 1: The problem (empty property). Card 2: The platform (Travel Staytion reach). Card 3: The simplicity (3 steps to list). Card 4: The reward (earnings). Card 5: CTA card.</td>
+        <td>Add Your Property Free</td>
+      </tr>
+      <tr>
+        <td><strong>Story Image</strong><br>1080 × 1920 px</td>
+        <td>Facebook &amp; Instagram Stories</td>
+        <td>Retargeting only. Urgency-led: "You were this close to listing your property." Or social proof: "Join X,XXX hosts already earning on Travel Staytion."</td>
+        <td>Complete Your Listing</td>
+      </tr>
+      <tr>
+        <td><strong>Dynamic Creative</strong></td>
+        <td>All placements</td>
+        <td>Upload 3–5 images, 3–5 headlines, 2–3 descriptions. Let Meta's algorithm find the best-performing combination per audience. Best for BOFU retargeting.</td>
+        <td>Join Thousands of Hosts</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="highlight" style="margin-top:8px;">
+    <strong>Creative rules:</strong> Always use real properties, never stock photos. Focus headlines on earning potential first, ease of listing second. Test at least 2 creative angles per ad set. Refresh creatives every 3–4 weeks to prevent fatigue.
+  </div>
+
+  <!-- Section 5: Bidding & Budget -->
+  <div class="section-title"><span class="num">5</span> Bidding Strategy</div>
+  <div style="margin-top:10px;">
+  <table class="budget-table">
+    <thead>
+      <tr><th>Campaign</th><th>Bidding Strategy</th><th>Why</th><th>Daily Budget</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Cold Prospecting</td>
+        <td>Lowest Cost (auto-bid)</td>
+        <td>Maximises reach within budget during the learning phase. Let Meta's algorithm optimise before constraining it.</td>
+        <td style="font-weight:700;">€25</td>
+      </tr>
+      <tr>
+        <td>Lookalike Prospecting</td>
+        <td>Lowest Cost (auto-bid)</td>
+        <td>Same rationale. Once 50+ conversions/week are recorded, consider switching to Cost Cap at your target CPL.</td>
+        <td style="font-weight:700;">€15</td>
+      </tr>
+      <tr>
+        <td>Retargeting (BOFU)</td>
+        <td>Highest Value or Cost Cap</td>
+        <td>Audience is small and high-intent. Prioritise conversion quality. Set Cost Cap at €20 max CPL once you have benchmark data.</td>
+        <td style="font-weight:700;">€10</td>
+      </tr>
+      <tr class="total">
+        <td>Total Daily</td>
+        <td>—</td>
+        <td>—</td>
+        <td>€50</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="highlight" style="margin-top:8px;">
+    <strong>Learning Phase:</strong> Each ad set needs ~50 optimisation events to exit the learning phase. At €50/day total across 3 campaigns, expect the learning phase to complete within 7–14 days, assuming a CPL of €8–15. Do not make significant changes to budget, audience, or creative during this period.
+  </div>
+  </div>
+
+  <!-- Section 6: KPIs -->
+  <div class="section-title"><span class="num">6</span> KPIs and Success Metrics</div>
+  <table class="kpi-table" style="margin-top:10px;">
+    <thead>
+      <tr><th>Metric</th><th>Cold Prospecting</th><th>Lookalike</th><th>Retargeting</th><th>Overall Target</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Primary KPI</td>
+        <td>Host page visits</td>
+        <td>Host page visits</td>
+        <td>Completed host sign-ups</td>
+        <td>Host sign-up conversions</td>
+      </tr>
+      <tr>
+        <td>Est. CPL</td>
+        <td>€10–20</td>
+        <td>€8–15</td>
+        <td>€3–10</td>
+        <td>&lt; €15 blended</td>
+      </tr>
+      <tr>
+        <td>Est. Impressions/mo</td>
+        <td>300K–500K</td>
+        <td>150K–250K</td>
+        <td>50K–100K</td>
+        <td>500K–850K total</td>
+      </tr>
+      <tr>
+        <td>Expected CTR</td>
+        <td>1–2%</td>
+        <td>1.5–2.5%</td>
+        <td>2–4%</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>Est. Monthly Sign-ups</td>
+        <td>30–75</td>
+        <td>30–60</td>
+        <td>30–100</td>
+        <td>90–235 / month</td>
+      </tr>
+      <tr>
+        <td>ROAS Signal</td>
+        <td>Awareness value</td>
+        <td>Mid-funnel quality</td>
+        <td>Direct conversion value</td>
+        <td>Revenue per new host listed</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Section 7: 30-Day Optimisation Roadmap -->
+  <div class="section-title"><span class="num">7</span> 30-Day Optimisation Roadmap</div>
+  <table class="strat-table" style="margin-top:10px;">
+    <thead>
+      <tr><th style="width:110px;">Phase</th><th>Days</th><th>Actions</th><th>Decision Points</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="phase">Week 1<br>Launch</td>
+        <td>1–7</td>
+        <td>Install Pixel. Launch all 3 campaigns. Run 2 creatives per ad set. Use Lowest Cost bidding. Do not touch campaigns.</td>
+        <td>Confirm Pixel is firing correctly on the host registration page (check Events Manager). Verify impressions are delivering.</td>
+      </tr>
+      <tr>
+        <td class="phase p2">Week 2<br>Learn</td>
+        <td>8–14</td>
+        <td>Monitor frequency (keep below 2.5 for cold audiences). Check which creatives are driving the most link clicks. Confirm ad sets are exiting learning phase.</td>
+        <td>If any ad set is stuck in learning (under-delivering), consolidate audiences or increase budget by 20%. Pause creatives with CTR below 0.5%.</td>
+      </tr>
+      <tr>
+        <td class="phase p3">Week 3–4<br>Optimise</td>
+        <td>15–30</td>
+        <td>Pause lowest-performing ad set in prospecting. Shift €5/day to retargeting if BOFU audience exceeds 1,000 people. Test 1 new creative variation. Build LAL from new pixel data.</td>
+        <td>Evaluate CPL by campaign. If retargeting CPL is below €10, increase its budget. If cold prospecting CPL exceeds €25, test new interest combinations or switch to Advantage+ audience.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Section 8: Advanced Strategies -->
+  <div class="section-title"><span class="num">8</span> Advanced Strategies to Test After Month 1</div>
+  <div class="two-col" style="margin-top:10px;">
+    <div class="col col-left">
+      <div class="card">
+        <div class="card-head">Advantage+ Audience Campaigns</div>
+        <div class="card-body">
+          Meta's AI-driven audience mode. You provide minimal audience signals and Meta finds the best converters automatically. Best used once you have 30+ conversions on the Pixel, giving the algorithm real data to work from. Test as a separate campaign against your manual targeting.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head orange">Lead Gen Forms (Instant Forms)</div>
+        <div class="card-body">
+          Instead of sending traffic to the Travel Staytion website, capture host enquiries directly inside Meta using an Instant Form. Lower friction = higher volume. Trade-off: lead quality may be lower. Test at €10/day alongside conversion campaigns. Pre-fill name and email from Meta profile reduces drop-off.
+        </div>
+      </div>
+    </div>
+    <div class="col col-right">
+      <div class="card">
+        <div class="card-head green">Seasonal &amp; Event-Based Targeting</div>
+        <div class="card-body">
+          Align campaign pushes with moments when property owners are most motivated: post-summer (September — empty calendar anxiety), January (new year, new income resolution), pre-peak season (March–April). Increase daily budget by €10–15 during these windows.
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head purple">CRM Custom Audiences &amp; Suppression</div>
+        <div class="card-body">
+          Upload your full host email list to Meta as a Custom Audience for exclusion (avoid wasting spend on existing hosts) and as a seed for LAL. Upload partial sign-up or enquiry lists as a separate warm audience for retargeting with a re-engagement message. Refresh CRM uploads monthly.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 9: Next Steps -->
+  <div class="section-title"><span class="num">9</span> Next Steps</div>
+  <table class="steps-table" style="margin-top:10px;">
+    <tr>
+      <td class="step-num">1</td>
+      <td class="step-label">Install Meta Pixel Today</td>
+      <td>Place the Meta Pixel on the Travel Staytion host registration page. Add ViewContent, Lead, and CompleteRegistration standard events. Verify in Events Manager before launching any campaign. This is the single most important action.</td>
+    </tr>
+    <tr>
+      <td class="step-num">2</td>
+      <td class="step-label">Upload CRM List</td>
+      <td>Upload existing host email list to Meta Business Manager as a Custom Audience. Use as exclusion on all cold campaigns immediately. Use as LAL seed for Lookalike Prospecting campaign.</td>
+    </tr>
+    <tr>
+      <td class="step-num">3</td>
+      <td class="step-label">Produce Creatives</td>
+      <td>Priority order: (1) Facebook/Instagram Feed Image 1080×1080 with real property — earning headline. (2) 15-second Reel/Story video with property owner hook. (3) 3-card Carousel. Minimum 2 creatives per ad set at launch.</td>
+    </tr>
+    <tr>
+      <td class="step-num">4</td>
+      <td class="step-label">Build Campaigns in Ads Manager</td>
+      <td>Set up 3 campaigns as per Section 3. Name ad sets clearly (e.g. "TOFU – Airbnb Interest – Feed Image"). Use Campaign Budget Optimisation (CBO) for prospecting campaigns to let Meta distribute budget to best-performing ad sets automatically.</td>
+    </tr>
+    <tr>
+      <td class="step-num">5</td>
+      <td class="step-label">Launch &amp; Enter Learning Phase</td>
+      <td>Launch all 3 campaigns simultaneously. Do not change budgets, audiences or creatives for the first 7 days. Allow the learning phase to complete. Monitor delivery and Pixel events only.</td>
+    </tr>
+    <tr>
+      <td class="step-num">6</td>
+      <td class="step-label">30-Day Performance Review</td>
+      <td>After 30 days, review CPL by campaign and ad set. Identify the best-performing audience × creative combination. Shift budget toward it. Drop any combination above €25 CPL. Begin testing Advantage+ and Lead Gen Forms as per Section 8.</td>
+    </tr>
+  </table>
+
+  <div class="footer">Confidential &nbsp;|&nbsp; Travel Staytion · Meta Ads Strategy · Property Owner Acquisition &nbsp;|&nbsp; June 2026 &nbsp;|&nbsp; www.travelstaytion.com</div>
+
+</div>
+</body>
+</html>
