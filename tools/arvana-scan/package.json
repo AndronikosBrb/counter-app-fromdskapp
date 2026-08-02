@@ -1,0 +1,16 @@
+{
+  "name": "arvana-scan",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Crawl arvana.gr with a real browser and extract categories, brands and prices for ad-copy research.",
+  "bin": {
+    "arvana-scan": "scan-arvana.js"
+  },
+  "scripts": {
+    "scan": "node scan-arvana.js"
+  },
+  "dependencies": {
+    "playwright": "^1.47.0",
+    "playwright-core": "^1.62.1"
+  }
+}
