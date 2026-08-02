@@ -29,14 +29,56 @@ to be opened up. Pick one of the two setups below.
    The cloud VM already ships Chromium at `/opt/pw-browsers`, which the script
    auto-detects, and it routes through the session proxy via `HTTPS_PROXY`.
 
-## Setup B — Your own machine (uses your real browser stack)
+## Setup B — Your own machine (REQUIRED for arvana.gr — beats Cloudflare)
+
+arvana.gr is behind a Cloudflare "Just a moment..." JS challenge. The cloud
+sandbox cannot pass it (its browser can't tunnel the security proxy, and
+Cloudflare blocks datacenter IPs anyway). Run locally instead — your home IP +
+a visible browser clears the challenge automatically.
+
+**1. Install Node.js** (v18+): https://nodejs.org (LTS installer). Verify:
 
 ```bash
+node -v
+```
+
+**2. Get this folder onto your machine.** Either clone the repo:
+
+```bash
+git clone https://github.com/AndronikosBrb/counter-app-fromdskapp.git
+cd counter-app-fromdskapp
+git checkout claude/arvana-search-campaign-copies-4464j7
 cd tools/arvana-scan
+```
+
+**3. Install and run in visible (headful) mode:**
+
+```bash
 npm install
 npx playwright install chromium
-node scan-arvana.js
+HEADFUL=1 node scan-arvana.js
 ```
+
+A Chromium window opens. If a Cloudflare checkbox appears, click it once; the
+script waits for the challenge to clear, then crawls. Results land in
+`output/arvana-scan.md` and `output/arvana-scan.json`.
+
+> On Windows PowerShell, set the variable like this:
+> `$env:HEADFUL=1; node scan-arvana.js`
+
+### Alternative — drive your real Chrome from Claude Code (chrome-devtools-mcp)
+
+If you'd rather have Claude read the pages through the Chrome you already use
+(already trusted by Cloudflare), run a local Claude Code session with a browser
+MCP:
+
+```bash
+npm install -g @anthropic-ai/claude-code
+claude          # then /login
+claude mcp add --scope project chrome -- npx -y chrome-devtools-mcp@latest
+```
+
+Restart `claude`, then ask: "open arvana.gr and read every category and price."
 
 ## Options (environment variables)
 

@@ -45,13 +45,31 @@ function findCloudChromium() {
 
 async function launch() {
   const executablePath = findCloudChromium();
+  // HEADFUL=1 opens a visible window. Strongly recommended when running locally:
+  // Cloudflare's "Just a moment..." challenge usually clears on its own for a
+  // real, visible browser on a residential IP, but flags headless ones.
+  const headful = process.env.HEADFUL === '1';
   const opts = {
-    headless: true,
+    headless: !headful,
     args: ['--no-sandbox', '--disable-blink-features=AutomationControlled'],
   };
   if (executablePath) opts.executablePath = executablePath;
   if (process.env.HTTPS_PROXY) opts.proxy = { server: process.env.HTTPS_PROXY };
   return chromium.launch(opts);
+}
+
+// Waits out a Cloudflare / "Just a moment..." interstitial. Returns true once
+// the real page has loaded, false if it never cleared within the timeout.
+async function waitForChallenge(page, timeoutMs = 45000) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    const title = (await page.title().catch(() => '')) || '';
+    const bodyLen = await page.evaluate(() => document.body?.innerText?.length || 0).catch(() => 0);
+    const blocked = /just a moment|attention required|checking your browser|verifying/i.test(title);
+    if (!blocked && bodyLen > 500) return true;
+    await page.waitForTimeout(2000);
+  }
+  return false;
 }
 
 const UA =
@@ -99,6 +117,17 @@ async function main() {
   console.log('→ Loading homepage:', START_URL);
   await page.goto(START_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
   await page.waitForTimeout(3000);
+  const passed = await waitForChallenge(page);
+  if (!passed) {
+    console.error(
+      '\n✗ Blocked by a Cloudflare/bot challenge that did not clear.\n' +
+      '  Re-run with a visible browser:  HEADFUL=1 node scan-arvana.js\n' +
+      '  and, if a checkbox appears, click it once. This must be run locally\n' +
+      '  (not in the cloud sandbox) to get past Cloudflare.'
+    );
+    await browser.close();
+    process.exit(2);
+  }
   result.title = await page.title();
 
   // Collect internal category-ish links from the homepage.
