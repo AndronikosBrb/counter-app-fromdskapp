@@ -1,0 +1,739 @@
+<title>ENGAGE Meta Strategy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    /* Light — cool Aegean paper, teal-biased neutrals */
+    --ink: #0F1B2D;
+    --paper: #F4F6F7;
+    --surface: #FFFFFF;
+    --surface-2: #EDF1F2;
+    --line: #D8E0E2;
+    --line-soft: #E6ECED;
+    --text: #26333F;
+    --text-soft: #566470;
+    --text-faint: #7C8992;
+    --teal: #0E8A94;
+    --teal-deep: #0B6169;
+    --teal-tint: #E2F0F1;
+    --ochre: #D8952E;
+    --ochre-tint: #F7ECD6;
+    --coral: #C7563F;
+    --good: #2E8B6F;
+    --shadow: 0 1px 2px rgba(15,27,45,.06), 0 8px 24px rgba(15,27,45,.06);
+    --shadow-sm: 0 1px 2px rgba(15,27,45,.05);
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ink: #E8EEF0;
+      --paper: #0C1622;
+      --surface: #12212F;
+      --surface-2: #182B3A;
+      --line: #263A49;
+      --line-soft: #1D2F3E;
+      --text: #D6DFE4;
+      --text-soft: #9DAAB3;
+      --text-faint: #74838D;
+      --teal: #2CB6BF;
+      --teal-deep: #1B8A92;
+      --teal-tint: #113038;
+      --ochre: #E5B058;
+      --ochre-tint: #2E2513;
+      --coral: #E27F68;
+      --good: #4FBF9C;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #E8EEF0;
+    --paper: #0C1622;
+    --surface: #12212F;
+    --surface-2: #182B3A;
+    --line: #263A49;
+    --line-soft: #1D2F3E;
+    --text: #D6DFE4;
+    --text-soft: #9DAAB3;
+    --text-faint: #74838D;
+    --teal: #2CB6BF;
+    --teal-deep: #1B8A92;
+    --teal-tint: #113038;
+    --ochre: #E5B058;
+    --ochre-tint: #2E2513;
+    --coral: #E27F68;
+    --good: #4FBF9C;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.25);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--text);
+    font-family: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  h1, h2, h3, h4 { font-family: "Archivo", system-ui, sans-serif; color: var(--ink); text-wrap: balance; margin: 0; }
+  a { color: var(--teal-deep); }
+
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--teal-deep);
+  }
+
+  /* ---- Header ---- */
+  header.hero {
+    background: linear-gradient(160deg, var(--ink) 0%, #12283D 60%, #123842 100%);
+    color: #EAF1F2;
+    border-bottom: 3px solid var(--teal);
+  }
+  header.hero .wrap { padding-top: 54px; padding-bottom: 48px; }
+  .brandline {
+    display: flex; align-items: center; gap: 12px;
+    font-family: "IBM Plex Mono", monospace; font-size: 12px;
+    letter-spacing: .16em; text-transform: uppercase; color: #8FB6BB;
+  }
+  .brandline .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ochre); }
+  header.hero h1 {
+    color: #FFFFFF;
+    font-size: clamp(34px, 5.4vw, 58px);
+    font-weight: 800; line-height: 1.02; letter-spacing: -.02em;
+    margin: 20px 0 0;
+  }
+  header.hero h1 .accent { color: var(--teal); }
+  header.hero .sub {
+    margin: 18px 0 0; max-width: 62ch;
+    font-size: 18px; color: #C3D2D5;
+  }
+  .metastrip {
+    display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 30px;
+    padding-top: 22px; border-top: 1px solid rgba(255,255,255,.14);
+    font-family: "IBM Plex Mono", monospace; font-size: 13px; color: #9FBEC2;
+  }
+  .metastrip b { color: #EAF1F2; font-weight: 600; }
+
+  /* ---- Sections ---- */
+  section { padding: 52px 0; border-bottom: 1px solid var(--line-soft); }
+  section:last-of-type { border-bottom: none; }
+  .sec-head { margin-bottom: 26px; }
+  .sec-head h2 {
+    font-size: clamp(24px, 3.2vw, 32px); font-weight: 700; letter-spacing: -.015em;
+    margin-top: 8px;
+  }
+  .sec-head p.lead { margin: 12px 0 0; max-width: 68ch; color: var(--text-soft); font-size: 17px; }
+
+  /* ---- Generic building blocks ---- */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 12px; padding: 22px; box-shadow: var(--shadow-sm);
+  }
+  .card h3 { font-size: 18px; font-weight: 700; }
+  .card h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  p { margin: 0 0 12px; }
+  p:last-child { margin-bottom: 0; }
+  ul.tight { margin: 8px 0 0; padding-left: 18px; }
+  ul.tight li { margin-bottom: 6px; color: var(--text-soft); }
+  ul.tight li b { color: var(--text); font-weight: 600; }
+
+  .pill {
+    display: inline-block; font-family: "IBM Plex Mono", monospace;
+    font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 999px; font-weight: 500;
+  }
+  .pill.teal { background: var(--teal-tint); color: var(--teal-deep); }
+  .pill.ochre { background: var(--ochre-tint); color: var(--ochre); }
+  .pill.line { border: 1px solid var(--line); color: var(--text-soft); }
+
+  /* ---- Thesis pillars ---- */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .pillar { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--teal); border-radius: 10px; padding: 20px; }
+  .pillar .n { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--teal-deep); font-weight: 600; }
+  .pillar h3 { font-size: 17px; margin: 8px 0 8px; }
+  .pillar p { font-size: 14.5px; color: var(--text-soft); }
+
+  /* ---- Architecture diagram ---- */
+  .arch { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .arch-col { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-sm); }
+  .arch-col .top { padding: 16px 18px; border-bottom: 1px solid var(--line-soft); background: var(--surface-2); }
+  .arch-col .top .lvl { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-faint); }
+  .arch-col .top h3 { font-size: 17px; margin-top: 4px; }
+  .arch-col .body { padding: 16px 18px; }
+  .adset-box { border: 1px dashed var(--teal); background: var(--teal-tint); border-radius: 9px; padding: 12px 14px; margin-bottom: 12px; }
+  .adset-box .lbl { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--teal-deep); text-transform: uppercase; letter-spacing: .06em; }
+  .adset-box p { font-size: 13.5px; margin: 4px 0 0; color: var(--text); }
+  .creative-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-family: "IBM Plex Mono", monospace; font-size: 11px; padding: 4px 8px; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--line); color: var(--text-soft); }
+
+  /* ---- Budget table ---- */
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow-sm); }
+  table { border-collapse: collapse; width: 100%; min-width: 560px; background: var(--surface); font-size: 14.5px; }
+  th, td { text-align: left; padding: 13px 16px; border-bottom: 1px solid var(--line-soft); }
+  th { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-faint); font-weight: 500; background: var(--surface-2); }
+  td.num, th.num { text-align: right; font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+  tr:last-child td { border-bottom: none; }
+  tr.total td { font-weight: 700; color: var(--ink); background: var(--surface-2); }
+  tr.total td { border-top: 2px solid var(--line); }
+
+  .callout {
+    display: flex; gap: 14px; align-items: flex-start;
+    background: var(--ochre-tint); border: 1px solid color-mix(in srgb, var(--ochre) 35%, transparent);
+    border-radius: 12px; padding: 18px 20px; margin-top: 22px;
+  }
+  .callout .mark { font-family: "Archivo"; font-weight: 800; color: var(--ochre); font-size: 22px; line-height: 1; flex-shrink: 0; }
+  .callout p { font-size: 14.5px; color: var(--text); }
+  .callout b { color: var(--ink); }
+
+  /* ---- Campaign blocks ---- */
+  .camp-banner {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 24px 26px; margin-bottom: 22px; box-shadow: var(--shadow);
+    border-top: 4px solid var(--teal);
+  }
+  .camp-banner.c2 { border-top-color: var(--ochre); }
+  .camp-banner .tag { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .camp-banner h2 { font-size: clamp(22px, 3vw, 28px); margin: 12px 0 0; }
+  .camp-banner .goal { margin-top: 12px; color: var(--text-soft); max-width: 74ch; }
+  .camp-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line-soft); }
+  .camp-meta .m .k { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-faint); }
+  .camp-meta .m .v { font-size: 14px; font-weight: 600; color: var(--ink); margin-top: 3px; }
+
+  .adset-detail { margin-bottom: 24px; }
+  .adset-detail .grid2 { gap: 16px; }
+
+  /* Creative cards */
+  .creatives { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .creative {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    overflow: hidden; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;
+  }
+  .creative .ch {
+    padding: 14px 18px; border-bottom: 1px solid var(--line-soft);
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    background: var(--surface-2);
+  }
+  .creative .ch .cnum { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 13px; color: var(--teal-deep); }
+  .creative .ch .fmt { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--text-faint); text-transform: uppercase; letter-spacing: .05em; }
+  .creative .cb { padding: 16px 18px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .creative .angle { font-size: 16px; font-weight: 700; color: var(--ink); font-family: "Archivo"; }
+  .copyblock { background: var(--paper); border: 1px solid var(--line-soft); border-radius: 9px; padding: 12px 14px; }
+  .copyblock .row { margin-bottom: 9px; }
+  .copyblock .row:last-child { margin-bottom: 0; }
+  .copyblock .fld { font-family: "IBM Plex Mono", monospace; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 2px; }
+  .copyblock .val { font-size: 13.5px; color: var(--text); line-height: 1.5; }
+  .copyblock .val.head { font-weight: 700; color: var(--ink); }
+  .cta-btn { display: inline-block; font-family: "IBM Plex Mono", monospace; font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; background: var(--teal); color: #fff; padding: 5px 12px; border-radius: 7px; }
+  .c2 .cta-btn { background: var(--ochre); }
+  .visual { font-size: 13px; color: var(--text-soft); }
+  .visual b { color: var(--text); font-weight: 600; }
+  .why { font-size: 12.5px; color: var(--text-faint); border-top: 1px dashed var(--line); padding-top: 10px; }
+  .why b { color: var(--teal-deep); font-weight: 600; }
+
+  /* Steps / timeline */
+  .steps { display: grid; gap: 14px; }
+  .step { display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: start; }
+  .step .num { width: 44px; height: 44px; border-radius: 10px; background: var(--teal-tint); color: var(--teal-deep); display: flex; align-items: center; justify-content: center; font-family: "IBM Plex Mono", monospace; font-weight: 600; }
+  .step h4 { font-size: 16px; }
+  .step p { font-size: 14px; color: var(--text-soft); margin-top: 3px; }
+
+  footer { padding: 40px 0 60px; color: var(--text-faint); font-size: 13px; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+  .divider-label { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint); margin: 4px 0 14px; }
+
+  @media (max-width: 860px) {
+    .grid2, .grid3, .pillars, .arch, .creatives, .camp-meta { grid-template-columns: 1fr; }
+    .camp-meta { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 520px) {
+    .camp-meta { grid-template-columns: 1fr; }
+    .metastrip { gap: 8px 18px; }
+  }
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="brandline"><span class="dot"></span> Travelstaytion &nbsp;·&nbsp; Every stay matters</div>
+    <h1>ENGAGE Programme<br><span class="accent">Meta Prospecting Strategy</span></h1>
+    <p class="sub">Two prospecting campaigns to acquire new ENGAGE members across Greece &amp; Cyprus — one lean, tightly-structured ad set each, and five diversified creatives per campaign built from the briefs and the Travelstaytion brand.</p>
+    <div class="metastrip">
+      <span>Channel · <b>Meta (Facebook &amp; Instagram)</b></span>
+      <span>Objective · <b>Leads / Conversions</b></span>
+      <span>Working budget · <b>≤ €200 / month</b></span>
+      <span>Evaluation · <b>4 months</b></span>
+      <span>Prepared · <b>Aug 2026</b></span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- STRATEGIC THESIS -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">01 · Strategic approach</span>
+      <h2>Two audiences, one disciplined structure</h2>
+      <p class="lead">Both briefs share the same job — turn cold, high-intent property professionals into contact-form leads — but speak to two distinct mindsets. We keep the account deliberately simple so a small budget concentrates signal instead of scattering it, and we let the creative do the diversification.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="n">Principle 01</div>
+        <h3>One ad set per campaign</h3>
+        <p>A single, well-defined ad set per campaign — no audience fragmentation. With ≤ €200/month, splitting into multiple ad sets would starve each of the ~50 weekly events Meta needs to learn. One pool, one signal.</p>
+      </div>
+      <div class="pillar">
+        <div class="n">Principle 02</div>
+        <h3>Diversify inside the ad set</h3>
+        <p>Five creatives run together in each ad set. Meta's delivery finds the winner faster than we can guess it, and each creative attacks a different motivation — income, trust, convenience, partnership, proof.</p>
+      </div>
+      <div class="pillar">
+        <div class="n">Principle 03</div>
+        <h3>Brand-led, not discount-led</h3>
+        <p>These owners choose a partner, not a coupon. Every creative leans on Travelstaytion's real equity — TÜV AUSTRIA-checked quality, Host Reception, a network since 2011 — to earn a high-consideration form fill.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCOUNT ARCHITECTURE -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">02 · Account architecture</span>
+      <h2>How the account is built</h2>
+      <p class="lead">A flat, legible structure at the Sales / Leads objective. Each campaign carries exactly one ad set holding all five creatives, with Advantage+ placements and shared exclusion lists applied at the ad-set level.</p>
+    </div>
+    <div class="arch">
+      <div class="arch-col">
+        <div class="top">
+          <div class="lvl">Campaign 1</div>
+          <h3>Property Owners · Management Services</h3>
+        </div>
+        <div class="body">
+          <div class="adset-box">
+            <span class="lbl">1 Ad Set — GR &amp; CY owners</span>
+            <p>Interests + lookalikes of top owners · Advantage+ placements · CRM &amp; form-submit exclusions</p>
+          </div>
+          <div class="creative-chips">
+            <span class="chip">CR-1 Income</span>
+            <span class="chip">CR-2 Hands-off</span>
+            <span class="chip">CR-3 Trust</span>
+            <span class="chip">CR-4 Proof</span>
+            <span class="chip">CR-5 Local</span>
+          </div>
+        </div>
+      </div>
+      <div class="arch-col">
+        <div class="top">
+          <div class="lvl">Campaign 2</div>
+          <h3>Managers · Local Partners</h3>
+        </div>
+        <div class="body">
+          <div class="adset-box" style="border-color: var(--ochre); background: var(--ochre-tint);">
+            <span class="lbl" style="color: var(--ochre);">1 Ad Set — Seasonal-destination managers</span>
+            <p>PMS &amp; industry interests + lookalikes of top members · Advantage+ placements · CRM &amp; form-submit exclusions</p>
+          </div>
+          <div class="creative-chips">
+            <span class="chip">CR-1 Portfolio</span>
+            <span class="chip">CR-2 Tech-fit</span>
+            <span class="chip">CR-3 Off-season</span>
+            <span class="chip">CR-4 Reach</span>
+            <span class="chip">CR-5 Partner story</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="callout">
+      <span class="mark">↔</span>
+      <p><b>Shared across both ad sets:</b> exclude all registered Travelstaytion members and everyone who has already submitted the contact form (CRM email-list uploads as Custom Audiences → set to <i>Exclude</i>). Add a website Custom Audience exclusion of recent form-completers via the Pixel as a live back-up to the CRM list.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BUDGET & OPTIMIZATION -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">03 · Budget &amp; optimisation</span>
+      <h2>Making €200 work — and the honest minimum</h2>
+      <p class="lead">The brief asks for the minimum recommended budget. Here is the straight answer, and the allocation that gets the most out of the €200/month cap.</p>
+    </div>
+    <div class="grid2" style="align-items:start;">
+      <div class="card">
+        <h3>Monthly allocation (cap €200)</h3>
+        <div class="tablewrap" style="margin-top:14px;">
+          <table>
+            <thead>
+              <tr><th>Campaign</th><th class="num">Daily</th><th class="num">Monthly</th><th class="num">Share</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>C1 — Owners / Management</td><td class="num">€3.70</td><td class="num">€110</td><td class="num">55%</td></tr>
+              <tr><td>C2 — Managers / Partners</td><td class="num">€3.00</td><td class="num">€90</td><td class="num">45%</td></tr>
+              <tr class="total"><td>Total</td><td class="num">€6.70</td><td class="num">€200</td><td class="num">100%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:13px;color:var(--text-soft);margin-top:12px;">C1 gets the slight majority: the "management services" audience is broader and warmer, so it converts the incremental euro more efficiently. Both stay above Meta's practical floor for a single-ad-set conversion campaign.</p>
+      </div>
+      <div class="card">
+        <h3>Phased optimisation event</h3>
+        <p style="color:var(--text-soft);font-size:14.5px;">At €3–4/day a campaign will rarely see enough <i>form submits</i> to exit the learning phase on that event alone. So we optimise in two phases and never sit in "Learning Limited" blind:</p>
+        <ul class="tight">
+          <li><b>Phase 1 (Weeks 1–3):</b> optimise for a mid-funnel signal — <b>Landing Page View</b> plus a custom <b>"Form Started"</b> event — to feed the pixel and cut cost-per-click while creatives sort themselves out.</li>
+          <li><b>Phase 2 (Week 4+):</b> switch the optimisation event to <b>Contact Form Submit (Lead)</b> once the pixel has enough volume, keeping the winning 2–3 creatives live.</li>
+        </ul>
+        <p style="font-size:13px;color:var(--text-soft);margin-top:10px;">Bid strategy: <b>Highest Volume</b> (no cap) during learning, revisit a cost cap only once we have a stable CPA baseline.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <span class="mark">!</span>
+      <p><b>The honest minimum.</b> €200/month runs a credible <b>test-and-learn</b> across both campaigns and will surface which angles and audiences convert — but it is a learning budget, not a scaling one. To reliably exit the learning phase on <i>form submits</i> in a 4-month window, a working range of <b>€400–€600/month per campaign</b> is the realistic minimum for volume. Recommendation: start at €200 to validate creative and CPA, then scale the winner.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CAMPAIGN 1 -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">04 · Campaign one</span>
+    <div class="camp-banner" style="margin-top:14px;">
+      <div class="tag">
+        <span class="pill teal">Prospecting</span>
+        <span class="pill line">Greece &amp; Cyprus</span>
+        <span class="pill line">Brief dated 6 Aug 2026</span>
+      </div>
+      <h2>Maximise the income of your property</h2>
+      <p class="goal">Acquire holiday-property owners in Greece &amp; Cyprus to choose Travelstaytion as their <b>property-management partner</b> — educating on the value proposition and driving high-intent traffic to the <a href="https://travelstaytionpreview.com/engage">ENGAGE landing page</a> to complete the contact form.</p>
+      <div class="camp-meta">
+        <div class="m"><div class="k">Primary KPI</div><div class="v">Contact-form submits</div></div>
+        <div class="m"><div class="k">Optimisation</div><div class="v">Leads (phased)</div></div>
+        <div class="m"><div class="k">Budget</div><div class="v">€110 / month</div></div>
+        <div class="m"><div class="k">Destination</div><div class="v">/engage page</div></div>
+      </div>
+    </div>
+
+    <div class="adset-detail">
+      <div class="divider-label">Ad set — targeting</div>
+      <div class="grid2">
+        <div class="card">
+          <h4>Who we reach</h4>
+          <ul class="tight">
+            <li><b>Profile:</b> owners of 5–50+ property portfolios</li>
+            <li><b>Geo:</b> Greece &amp; Cyprus</li>
+            <li><b>Interests:</b> short-term rental &amp; hospitality, professional property management, real estate &amp; investment</li>
+            <li><b>Lookalikes:</b> 1–3% of top-performing Travelstaytion owners</li>
+            <li><b>Placements:</b> Advantage+ (Feed, Reels, Stories, Marketplace)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Who we exclude</h4>
+          <ul class="tight">
+            <li>All registered Travelstaytion members (CRM list)</li>
+            <li>Everyone who already submitted the contact form (CRM list)</li>
+            <li>Recent form-completers via Pixel Custom Audience (live back-up)</li>
+          </ul>
+          <p style="font-size:12.5px;color:var(--text-faint);margin-top:10px;">Languages: Greek + English. Age 30–65+. Auto-refresh CRM exclusion lists monthly.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider-label">The five diversified creatives</div>
+    <div class="creatives">
+
+      <div class="creative">
+        <div class="ch"><span class="cnum">CR-1 · Income</span><span class="fmt">Single image</span></div>
+        <div class="cb">
+          <div class="angle">"Your property is earning less than it could."</div>
+          <div class="copyblock">
+            <div class="row"><span class="fld">Primary text</span><span class="val">Your home is worth more than last season's numbers show. Travelstaytion's professional management turns your Greek or Cypriot property into a year-round income stream — expert pricing, five-star guests, zero day-to-day hassle for you. See what your property could really earn.</span></div>
+            <div class="row"><span class="fld">Headline</span><span class="val head">Maximise the income of your property</span></div>
+            <div class="row"><span class="fld">Description</span><span class="val">Professional management, since 2011.</span></div>
+            <div class="row"><span class="cta-btn">Learn more</span></div>
+          </div>
+          <div class="visual"><b>Visual:</b> a bright, styled Aegean interior with a clean income-uplift figure overlaid (e.g. "+ occupancy, + nightly rate"). Warm, aspirational, not a hard chart.</div>
+          <div class="why"><b>Angle:</b> rational / financial upside — the headline promise of the /engage page, front-loaded.</div>
+        </div>
+      </div>
+
+      <div class="creative">
+        <div class="ch"><span class="cnum">CR-2 · Hands-off</span><span class="fmt">Reel / video 9:16</span></div>
+        <div class="cb">
+          <div class="angle">"You own it. We run it."</div>
+          <div class="copyblock">
+            <div class="row"><span class="fld">Primary text</span><span class="val">Guest messaging at midnight. Cleaning schedules. Pricing every weekend. Let it go. Travelstaytion handles the whole operation — from bookings to Host Reception — while you watch the bookings roll in. Ownership without the workload.</span></div>
+            <div class="row"><span class="fld">Headline</span><span class="val head">Full management. Completely hands-off.</span></div>
+            <div class="row"><span class="fld">Description</span><span class="val">From check-in to concierge — handled.</span></div>
+            <div class="row"><span class="cta-btn">Learn more</span></div>
+          </div>
+          <div class="visual"><b>Visual:</b> fast cut of the operational load (phone pings, calendars) resolving into a calm owner + a running Host Reception line. Text-on-screen, captioned, sound-off first three seconds.</div>
+          <div class="why"><b>Angle:</b> emotional relief / convenience — sells time back, using the real Host Reception service.</div>
+        </div>
+      </div>
+
+      <div class="creative">
+        <div class="ch"><span class="cnum">CR-3 · Trust</span><span class="fmt">Single image</span></div>
+        <div class="cb">
+          <div class="angle">"Hotel-standard quality, independently checked."</div>
+          <div class="copyblock">
+            <div class="row"><span class="fld">Primary text</span><span class="val">Not every management company is the same. Every Travelstaytion home is checked against rigorous quality criteria in partnership with TÜV AUSTRIA — so your property is presented to guests at luxury-hotel standard. Trust your home to a partner that protects its reputation.</span></div>
+            <div class="row"><span class="fld">Headline</span><span class="val head">Quality your property deserves</span></div>
+            <div class="row"><span class="fld">Description</span><span class="val">TÜV AUSTRIA-checked · Every stay matters</span></div>
+            <div class="row"><span class="cta-btn">Learn more</span></div>
+          </div>
+          <div class="visual"><b>Visual:</b> a pristine, well-styled property with a discreet quality-seal motif. Premium, restrained, editorial.</div>
+          <div class="why"><b>Angle:</b> authority / trust — the differentiator vs. local managers, built on a verifiable claim.</div>
+        </div>
+      </div>
+
+      <div class="creative">
+        <div class="ch"><span class="cnum">CR-4 · Proof</span><span class="fmt">Carousel</span></div>
+        <div class="cb">
+          <div class="angle">"Owners like you, already earning more."</div>
+          <div class="copyblock">
+            <div class="row"><span class="fld">Primary text</span><span class="val">Property owners across Greece and Cyprus have handed the hard part to us — and kept the returns. Swipe to see how professional management changes the numbers, the guests, and the peace of mind. Your property could be next.</span></div>
+            <div class="row"><span class="fld">Headline</span><span class="val head">The difference professional management makes</span></div>
+            <div class="row"><span class="fld">Description</span><span class="val">Join a network trusted since 2011.</span></div>
+            <div class="row"><span class="cta-btn">Learn more</span></div>
+          </div>
+          <div class="visual"><b>Visual:</b> 3–4 cards — (1) an owner quote, (2) before/after "self-managed vs. Travelstaytion", (3) a guest-review 5★, (4) the CTA card. Consistent template, swipeable.</div>
+          <div class="why"><b>Angle:</b> social proof — carousel format itself is the diversifier; strongest for high-consideration decisions.</div>
+        </div>
+      </div>
+
+      <div class="creative">
+        <div class="ch"><span class="cnum">CR-5 · Local</span><span class="fmt">Reel / UGC-style 9:16</span></div>
+        <div class="cb">
+          <div class="angle">"From Athens to Limassol — your local income partner."</div>
+          <div class="copyblock">
+            <div class="row"><span class="fld">Primary text</span><span class="val">You know your corner of Greece or Cyprus. We know how to fill it with the right guests, all year. Travelstaytion combines local know-how with a global booking network — so your property works as hard as the destination it sits in.</span></div>
+            <div class="row"><span class="fld">Headline</span><span class="val head">Local expertise. Global demand.</span></div>
+            <div class="row"><span class="fld">Description</span><span class="val">Greek &amp; Cypriot properties, professionally run.</span></div>
+            <div class="row"><span class="cta-btn">Learn more</span></div>
+          </div>
+          <div class="visual"><b>Visual:</b> authentic, hand-held-feel footage of recognisable GR/CY locations + a real home, warm voiceover or captions. Deliberately less polished than CR-3 to test UGC vs. premium.</div>
+          <div class="why"><b>Angle:</b> local relevance + UGC format — tests native/authentic creative against the studio look.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CAMPAIGN 2 -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">05 · Campaign two</span>
+    <div class="camp-banner c2" style="margin-top:14px;">
+      <div class="tag">
+        <span class="pill ochre">Prospecting</span>
+        <span class="pill line">Seasonal GR &amp; CY destinations</span>
+        <span class="pill line">Brief unchanged since 7 Jul 2026</span>
+      </div>
+      <h2>Why become a local partner</h2>
+      <p class="goal">Acquire quality-conscious property <b>owners and managers</b> in seasonal Greek &amp; Cypriot destinations to become Travelstaytion local partners — driving high-intent traffic to the "Why become a local partner" page and the contact form.</p>
+      <div class="camp-meta">
+        <div class="m"><div class="k">Primary KPI</div><div class="v">Contact-form submits</div></div>
+        <div class="m"><div class="k">Optimisation</div><div class="v">Leads (phased)</div></div>
+        <div class="m"><div class="k">Budget</div><div class="v">€90 / month</div></div>
+        <div class="m"><div class="k">Destination</div><div class="v">Local-partner page</div></div>
+      </div>
+    </div>
+
+    <div class="adset-detail">
+      <div class="divider-label">Ad set — targeting</div>
+      <div class="grid2">
+        <div class="card">
+          <h4>Who we reach</h4>
+          <ul class="tight">
+            <li><b>Profile:</b> guest-centric managers / owners of 5–50+ portfolios</li>
+            <li><b>Geo:</b> seasonal GR &amp; CY destinations (per TBC geo list — indicative)</li>
+            <li><b>Interests:</b> PMS tools (Guesty, Avantio, Hostaway), vacation-rental events (VRMA, VRWS), short-term-rental regulations</li>
+            <li><b>Lookalikes:</b> 1–3% of top-performing Travelstaytion members</li>
+            <li><b>Placements:</b> Advantage+ (Feed, Reels, Stories)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4>Who we exclude</h4>
+          <ul class="tight">
+            <li>All registered Travelstaytion members (CRM list)</li>
+            <li>Everyone who already submitted the contact form (CRM list)</li>
+            <li>Recent form-completers via Pixel Custom Audience (live back-up)</li>
+          </ul>
+          <p style="font-size:12.5px;color:var(--text-faint);margin-top:10px;">This is a more professional, B2B-leaning audience — copy speaks manager-to-manager, not to first-time hosts. Confirm final geo list before launch.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider-label">The five diversified creatives</div>
+    <div class="creatives c2">
+
+      <div class="creative">
+        <div class="ch"><span class="cnum">CR-1 · Portfolio</span><span class="fmt">Single image</span></div>
+        <div class="cb">
+          <div class="angle">"Grow your portfolio with a brand behind you."</div>
+          <div class="copyblock">
+            <div class="row"><span class="fld">Primary text</span><span class="val">You run a tight operation. Imagine it with a global brand, a global booking network, and a partner that shares your standards. Become a Travelstaytion local partner and scale your managed portfolio without losing the quality you're known for.</span></div>
+            <div class="row"><span class="fld">Headline</span><span class="val head">Scale your portfolio as a local partner</span></div>
+            <div class="row"><span class="fld">Description</span><span class="val">Partnering with pros since 2011.</span></div>
+            <div class="row"><span class="cta-btn">Learn more</span></div>
+          </div>
+          <div class="visual"><b>Visual:</b> confident, business-forward image — a manager reviewing a portfolio on a tablet in a beautiful property. Aspirational-professional, not consumer-cute.</div>
+          <div class="why"><b>Angle:</b> growth / ambition — the core partner value proposition, aimed at operators.</div>
+        </div>
+      </div>
+
+      <div class="creative">
+        <div class="ch"><span class="cnum">CR-2 · Tech-fit</span><span class="fmt">Single image</span></div>
+        <div class="cb">
+          <div class="angle">"Already on Guesty, Avantio or Hostaway? We fit right in."</div>
+          <div class="copyblock">
+            <div class="row"><span class="fld">Primary text</span><span class="val">You've built your stack. Travelstaytion adds demand, not friction — a premium distribution partner that plugs into how you already work. More bookings from the right guests, without rebuilding your operation.</span></div>
+            <div class="row"><span class="fld">Headline</span><span class="val head">A partner that fits your workflow</span></div>
+            <div class="row"><span class="fld">Description</span><span class="val">Built for professional managers.</span></div>
+            <div class="row"><span class="cta-btn">Learn more</span></div>
+          </div>
+          <div class="visual"><b>Visual:</b> clean, tech-savvy composition nodding to PMS dashboards + Travelstaytion. Signals "we speak your language" to software-literate managers.</div>
+          <div class="why"><b>Angle:</b> operational fit — directly mirrors the brief's PMS interest targeting; qualifies the pro audience.</div>
+        </div>
+      </div>
+
+      <div class="creative">
+        <div class="ch"><span class="cnum">CR-3 · Off-season</span><span class="fmt">Reel / video 9:16</span></div>
+        <div class="cb">
+          <div class="angle">"Fill the calendar beyond peak season."</div>
+          <div class="copyblock">
+            <div class="row"><span class="fld">Primary text</span><span class="val">Seasonal destinations shouldn't mean seasonal income. Travelstaytion's global demand keeps your properties booked into the shoulder months — turning a three-month rush into a longer, steadier year. See how becoming a local partner changes your calendar.</span></div>
+            <div class="row"><span class="fld">Headline</span><span class="val head">Turn peak season into a longer year</span></div>
+            <div class="row"><span class="fld">Description</span><span class="val">Demand that doesn't clock off in October.</span></div>
+            <div class="row"><span class="cta-btn">Learn more</span></div>
+          </div>
+          <div class="visual"><b>Visual:</b> a calendar filling from a short peak block into extended months, over shoulder-season destination footage. Captioned, sound-off legible.</div>
+          <div class="why"><b>Angle:</b> the sharpest pain point for seasonal-destination operators — occupancy beyond summer.</div>
+        </div>
+      </div>
+
+      <div class="creative">
+        <div class="ch"><span class="cnum">CR-4 · Reach</span><span class="fmt">Single image</span></div>
+        <div class="cb">
+          <div class="angle">"Plug into a global demand network."</div>
+          <div class="copyblock">
+            <div class="row"><span class="fld">Primary text</span><span class="val">Your homes are ready. Are they in front of enough of the right guests? Travelstaytion connects local partners to a worldwide network of quality-seeking travellers — the reach of a global brand, applied to your corner of Greece or Cyprus.</span></div>
+            <div class="row"><span class="fld">Headline</span><span class="val head">Global reach for your local homes</span></div>
+            <div class="row"><span class="fld">Description</span><span class="val">A curated network, since 2011.</span></div>
+            <div class="row"><span class="cta-btn">Learn more</span></div>
+          </div>
+          <div class="visual"><b>Visual:</b> a single hero home with a subtle global-network / reach motif. Emphasis on scale and credibility.</div>
+          <div class="why"><b>Angle:</b> distribution / reach — the tangible asset a partnership brings, distinct from CR-1's growth framing.</div>
+        </div>
+      </div>
+
+      <div class="creative">
+        <div class="ch"><span class="cnum">CR-5 · Partner story</span><span class="fmt">Reel / testimonial 9:16</span></div>
+        <div class="cb">
+          <div class="angle">"Hear it from a local partner."</div>
+          <div class="copyblock">
+            <div class="row"><span class="fld">Primary text</span><span class="val">"We kept our standards — and gained a network." Meet the property managers who became Travelstaytion local partners and grew without compromising the quality their guests expect. A vetted community of professionals. See if it's the right fit for you.</span></div>
+            <div class="row"><span class="fld">Headline</span><span class="val head">Why managers become local partners</span></div>
+            <div class="row"><span class="fld">Description</span><span class="val">A vetted community of professionals.</span></div>
+            <div class="row"><span class="cta-btn">Learn more</span></div>
+          </div>
+          <div class="visual"><b>Visual:</b> testimonial-style footage / stills of a real (or representative) local partner, captioned quotes. Peer-to-peer credibility, less polished by design.</div>
+          <div class="why"><b>Angle:</b> peer proof + testimonial format — the B2B counterpart to C1's social-proof creative.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MEASUREMENT -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">06 · Measurement &amp; optimisation</span>
+      <h2>How we read success</h2>
+      <p class="lead">Primary KPI is completed contact forms. Everything else tells us <i>why</i> the number is moving and where to steer budget.</p>
+    </div>
+    <div class="grid3">
+      <div class="card">
+        <h4>Primary</h4>
+        <ul class="tight">
+          <li><b>Completed contact forms</b> (conversions)</li>
+          <li>Cost per lead / CPA</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Efficiency</h4>
+        <ul class="tight">
+          <li>Unique landing-page visits</li>
+          <li>CPC &amp; CTR</li>
+          <li>Cost per landing-page view</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Quality</h4>
+        <ul class="tight">
+          <li>Form completion rate (6/6 = 100%, 5/6 = 83% …)</li>
+          <li>Avg. session duration</li>
+          <li>Creative-level winner vs. dropped</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout" style="background:var(--teal-tint);border-color:color-mix(in srgb, var(--teal) 30%, transparent);">
+      <span class="mark" style="color:var(--teal-deep);">✓</span>
+      <p><b>Tracking prerequisites before launch:</b> Meta Pixel + Conversions API on both landing pages; a standard <i>Lead</i> event on form submit and a custom <i>Form Started</i> event on step 1; per-step events to power the completion-rate KPI; UTM tagging on every creative. Without these, the primary KPI can't be measured — this is the one true launch blocker.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">07 · Roadmap</span>
+      <h2>From launch to 4-month readout</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">0</div>
+        <div><h4>Pre-launch — tracking &amp; assets</h4><p>Confirm Pixel/CAPI + events, upload CRM exclusion lists, finalise C2 geo list, produce the 10 creatives (5 per campaign). Sign-off on the two landing pages.</p></div>
+      </div>
+      <div class="step">
+        <div class="num">1</div>
+        <div><h4>Weeks 1–3 — learn</h4><p>Both campaigns live, one ad set each, all 5 creatives running. Optimise for Landing Page View + Form Started. No changes for the first 7 days to protect the learning phase.</p></div>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <div><h4>Week 4 — switch &amp; prune</h4><p>Move optimisation to Contact Form Submit. Pause the 2 weakest creatives per campaign; keep budget flowing to proven angles. First monthly performance check &amp; optimisation actions.</p></div>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <div><h4>Months 2–4 — optimise</h4><p>Monthly reviews: refresh tiring creative, refine audiences off winning signals, and — budget permitting — make the case to scale the stronger campaign beyond €200.</p></div>
+      </div>
+      <div class="step">
+        <div class="num">4</div>
+        <div><h4>End of month 4 — final report</h4><p>Full read on CPA, lead volume &amp; quality, winning angles per audience, and a scaling recommendation for the ongoing programme.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Travelstaytion · ENGAGE Programme — Meta Prospecting Strategy</span>
+    <span class="mono">Draft for discussion · Budget capped at €200/month</span>
+  </div>
+</footer>
